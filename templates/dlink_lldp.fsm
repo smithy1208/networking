@@ -1,0 +1,15 @@
+Value Filldown local_host (\d+.\d+.\d+.\d+)
+Value Required local_port (\S+)
+Value chassis_id (\S+)
+Value remote_port (.*)
+Value neighbor (.*)
+Value remote_ip (.*)
+
+Start
+  ^${local_host}
+  ^Port ID : ${local_port}
+  ^ +Chassis.+: ${chassis_id}
+  ^ +Port ID +: ${remote_port}
+  ^ +System Name +: ${neighbor}
+  ^ +Address +: ${remote_ip}
+  ^.+PVID -> Record
