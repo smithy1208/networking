@@ -1,0 +1,10 @@
+{% for vlan in vlans %}
+create vlan {{ vlan['name'] }} tag {{ vlan['id'] }}
+create ipif {{ vlan['name'] }} {{ vlan['ip'] }} {{ vlan['name'] }} state enable
+{% for dhcp in dhcps if 'ipoe' in vlan.name %}
+config dhcp_relay add ipif {{ vlan.name }} {{ dhcp }}
+{% endfor %}
+{% if 'users' in vlan.name %}
+config dhcp_relay add ipif {{ vlan.name }} 10.69.96.250
+{% endif %}
+{% endfor %}
